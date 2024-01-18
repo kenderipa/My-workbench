@@ -16,7 +16,8 @@ jobs:
       if: always()
       run: |
         version=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)
-        
+        echo "VERSION=$version" >> $GITHUB_ENV
+       
   release:
       needs: [build]
       permissions: write-all
@@ -26,11 +27,9 @@ jobs:
         - name: release
           uses: marvinpinto/action-automatic-releases@latest
           with:
-            title: AppMan ${{ version }}
-            automatic_release_tag: ${{ version }}
+            title: AppMan ${{ env.VERSION }}
+            automatic_release_tag: ${{ env.VERSION }}
             prerelease: false
             draft: false
-            files: |
-              junest-x86_64.tar.gz
             repo_token: ${{ secrets.GITHUB_TOKEN }}
 
