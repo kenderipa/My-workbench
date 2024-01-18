@@ -10,19 +10,23 @@ jobs:
   Setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - id: setVariables
         run: |
-          version=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)
-          echo "AM_VERSION=$version" >> $GITHUB_ENV
-      
+          input=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)
+          echo "matrix=$input" >> $GITHUB_OUTPUT
+          TAG=${{ matrix.tag }}
+          echo "AM_VERSION=$TAG" >> $GITHUB_ENV
+        env:
+          input: ${{ inputs.input_json }}
+    outputs:
+      matrix: ${{ steps.setVariables.outputs.matrix }}
+     
   release:
       permissions: write-all
       runs-on: ubuntu-latest
 
       steps:
         - name: release
-          id: ${{ env.AM_VERSION }}
           uses: ncipollo/release-action@v1.12.0
           with:
             name: AppMan ${{ env.AM_VERSION }}
