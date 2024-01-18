@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: build
+    - name: Check version
       if: always()
       run: |
         version=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)
@@ -25,7 +25,7 @@ jobs:
 
       steps:
         - name: release
-          uses: marvinpinto/action-automatic-releases@latest
+          uses: ncipollo/release-action@v1.12.0
           with:
             title: AppMan ${{ env.VERSION }}
             tag: ${{ env.VERSION }}
