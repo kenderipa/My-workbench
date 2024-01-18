@@ -13,11 +13,9 @@ jobs:
       - id: setVariables
         run: |
           input=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)
-          echo "matrix=$input" >> $GITHUB_OUTPUT
-          TAG=${{ matrix.tag }}
-          echo "AM_VERSION=$TAG" >> $GITHUB_ENV
+          echo "AM_VERSION=$input" >> $GITHUB_ENV
         env:
-          input: ${{ inputs.input_json }}
+          input: ${{ GITHUB_ENV }}
     outputs:
       matrix: ${{ steps.setVariables.outputs.matrix }}
      
