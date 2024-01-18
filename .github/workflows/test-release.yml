@@ -3,7 +3,10 @@ concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
 
-on:
+on: 
+  push:
+    tags:
+    - '*'
   workflow_dispatch:
 
 jobs:
