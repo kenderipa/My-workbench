@@ -1,26 +1,26 @@
-name: Test Release
+name: Release MPV Appimage
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
-  workflow_call:
-    inputs:
-      input_json:
-        required: true
-        type: string
   workflow_dispatch:
 
 jobs:
-  build:
+  Setup:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Check version
-      if: always()
-      run: |
-        version=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)
-        echo "VERSION=$version" >> $GITHUB_ENV
-       
+      - id: setVariables
+        run: |
+          echo "matrix=$input" >> $GITHUB_OUTPUT
+          version=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)
+          echo "VERSION=$version" >> $GITHUB_ENV
+        env:
+          input: ${{ inputs.input_json }}
+    outputs:
+      matrix: ${{ steps.setVariables.outputs.matrix }}
+      
   release:
-      needs: [build]
       permissions: write-all
       runs-on: ubuntu-latest
 
