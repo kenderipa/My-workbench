@@ -1,4 +1,4 @@
-name: Release MPV Appimage
+name: Test tag
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
