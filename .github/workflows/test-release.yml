@@ -16,9 +16,7 @@ jobs:
           version=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)
           echo "VERSION=$version" >> $GITHUB_ENV
         env:
-          input: ${{ inputs.input_json }}
-    outputs:
-      matrix: ${{ steps.setVariables.outputs.matrix }}
+          input: ${{ env.VERSION }}
       
   release:
       permissions: write-all
