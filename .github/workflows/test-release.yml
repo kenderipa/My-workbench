@@ -4,9 +4,6 @@ concurrency:
   cancel-in-progress: true
 
 on: 
-  push:
-    tags:
-    - '*'
   workflow_dispatch:
 
 jobs:
@@ -25,6 +22,7 @@ jobs:
 
       steps:
         - name: release
+          id: ${{ env.AM_VERSION }}
           uses: ncipollo/release-action@v1.12.0
           with:
             name: AppMan ${{ env.AM_VERSION }}
