@@ -1,9 +1,10 @@
 name: Test Release
-concurrency:
-  group: build-${{ github.ref }}
-  cancel-in-progress: true
-
 on:
+  workflow_call:
+    inputs:
+      input_json:
+        required: true
+        type: string
   workflow_dispatch:
 
 jobs:
