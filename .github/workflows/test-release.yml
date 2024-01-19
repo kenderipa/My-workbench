@@ -1,27 +1,32 @@
 name: Test tag
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
 
-on: 
+on:
   workflow_dispatch:
 
 jobs:
   build:
-    name: Create Release
-    if: always()
     runs-on: ubuntu-latest
-    permissions: write-all
     steps:
-      - name: Prepare variables
-        id: prepare_variables
-        run:
-          echo "latest_tag=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> "$GITHUB_ENV"
-      - name: Create GitHub Release
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: AppMan ${{ env.latest_tag }}
-          draft: false
-          prerelease: false
-          upload_url: ${{ steps.step_upload_url.outputs.upload_url }}
+    - uses: actions/checkout@v3
+
+    - name: build
+      if: always()
+      run: |
+        echo "latest_tag=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> "$GITHUB_ENV"
+
+  release:
+      permissions: write-all
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: release
+          uses: marvinpinto/action-automatic-releases@latest
+          with:
+            title: AppMan ${{ env.latest_tag }}
+            automatic_release_tag: ${{ github.ref }}
+            prerelease: false
+            draft: false
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
