@@ -6,13 +6,15 @@ concurrency:
 on:
   workflow_dispatch:
     inputs:
-      input_json:
+      input_json: 
         required: true
         type: string
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     steps:
     - uses: actions/checkout@v3
 
