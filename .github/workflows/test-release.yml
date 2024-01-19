@@ -16,8 +16,8 @@ jobs:
       if: always()
       run: |
         echo "latest_tag=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> "$GITHUB_ENV"
-        echo "input=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> "$GITHUB_ENV"
-        echo "ref=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> "$GITHUB_ENV"
+        echo "$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> input
+        echo "$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> ref
        
     - name: AppMan Release
       uses: ncipollo/release-action@v1.12.0
