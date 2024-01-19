@@ -16,10 +16,8 @@ jobs:
       if: always()
       run: |
         echo "latest_tag=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> "$GITHUB_ENV"
-        echo "UPLOAD_CONTENT=true" >> $GITHUB_ENV
-
+       
     - name: AppMan Release
-      if: ${{ env.UPLOAD_CONTENT }}
       uses: ncipollo/release-action@v1.12.0
       with:
           name: AppMan ${{ env.GITHUB_ENV }}
