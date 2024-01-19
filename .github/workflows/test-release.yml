@@ -18,10 +18,10 @@ jobs:
         echo "latest_tag=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> "$GITHUB_ENV"
 
     - name: release
-      uses: marvinpinto/action-automatic-releases@latest
+      uses: actions/create-release@v1
       with:
-        title: AppMan ${{ env.latest_tag }}
-        automatic_release_tag: ${{ github.ref }}
+        tag_name: AppMan ${{ env.latest_tag }}
+        release_name: ${{ github.ref }}
         prerelease: false
         draft: false
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
