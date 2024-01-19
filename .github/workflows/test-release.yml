@@ -5,6 +5,10 @@ concurrency:
 
 on:
   workflow_dispatch:
+    inputs:
+      input_json: 
+        required: true
+        type: string
 
 jobs:
   build:
@@ -14,8 +18,8 @@ jobs:
 
     - name: build
     - id: setVariables
-    - if: always()
       run: |
+        set -u
         input=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)
         echo "matrix=$input" >> $GITHUB_OUTPUT
       env:
