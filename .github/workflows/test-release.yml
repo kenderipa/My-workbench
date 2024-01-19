@@ -27,7 +27,7 @@ jobs:
           uses: marvinpinto/action-automatic-releases@latest
           with:
             title: AppMan ${{ env.APPMAN_TAG }}
-            automatic_release_tag: ${{ env.APPMAN_TAG }}
+            tag: ${{ env.APPMAN_TAG }}
             prerelease: false
             draft: false
             repo_token: ${{ secrets.GITHUB_TOKEN }}
