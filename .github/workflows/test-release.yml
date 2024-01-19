@@ -24,3 +24,4 @@ jobs:
           release_name: AppMan ${{ env.latest_tag }}
           draft: false
           prerelease: false
+          upload_url: ${{ steps.step_upload_url.outputs.upload_url }}
