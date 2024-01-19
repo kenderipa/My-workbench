@@ -21,8 +21,8 @@ jobs:
         id: create_release
         uses: marvinpinto/action-automatic-releases@latest
         with:
-          automatic_release_tag: ${{ github.ref }}
-          title: AppMan ${{ github.ref }}
+          automatic_release_tag: ${{ github.name }}
+          title: AppMan ${{ github.name }}
           draft: false
           prerelease: false
           repo_token: ${{ secrets.GITHUB_TOKEN }}
