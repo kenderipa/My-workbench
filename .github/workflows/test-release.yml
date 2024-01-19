@@ -4,6 +4,11 @@ concurrency:
   cancel-in-progress: true
 
 on:
+  workflow_call:
+    inputs:
+      input_json:
+        required: true
+        type: string
   workflow_dispatch:
 
 jobs:
@@ -11,17 +16,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-
     - name: build
       if: always()
       run: |
+        echo "matrix=$input" >> $GITHUB_OUTPUT
         echo "latest_tag=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> "$GITHUB_ENV"
-        echo "$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> input
-        echo "$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> ref
-       
-    - name: AppMan Release
-      uses: ncipollo/release-action@v1.12.0
-      with:
+      env:
+          input: ${{ inputs.input_json }}
+    outputs:
+         matrix: ${{ steps.setVariables.outputs.matrix }}
+
+    
+    name: AppMan Release
+     - uses: ncipollo/release-action@v1.12.0
+     - with:
           name: AppMan ${{ env.GITHUB_ENV }}
           tag: ${{ env.GITHUB_ENV }}
           prerelease: false
