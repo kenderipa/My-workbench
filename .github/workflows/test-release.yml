@@ -5,10 +5,6 @@ concurrency:
 
 on:
   workflow_dispatch:
-    inputs:
-      input_json: 
-        required: true
-        type: string
 
 jobs:
   build:
