@@ -20,7 +20,7 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: Aisleriot-x86_64.AppImage
-        tag: ${{ env.APPMAN_TAG }}
+        path: ${{ env.APPMAN_TAG }}
         
   release:
       needs: [build]
