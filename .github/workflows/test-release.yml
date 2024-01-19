@@ -22,7 +22,9 @@ jobs:
       with:
           name: AppMan ${{ env.GITHUB_ENV }}
           tag: ${{ env.GITHUB_ENV }}
-          prerelease: true
+          prerelease: false
+          artifacts: |
+            dist/*
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           removeArtifacts: true
