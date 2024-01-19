@@ -17,16 +17,11 @@ jobs:
       run: |
         echo "latest_tag=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> "$GITHUB_ENV"
 
-  release:
-      permissions: write-all
-      runs-on: ubuntu-latest
-
-      steps:
-        - name: release
-          uses: marvinpinto/action-automatic-releases@latest
-          with:
-            title: AppMan ${{ env.latest_tag }}
-            automatic_release_tag: ${{ github.ref }}
-            prerelease: false
-            draft: false
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: release
+      uses: marvinpinto/action-automatic-releases@latest
+      with:
+        title: AppMan ${{ env.latest_tag }}
+        automatic_release_tag: ${{ github.ref }}
+        prerelease: false
+        draft: false
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
