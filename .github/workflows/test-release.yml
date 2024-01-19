@@ -17,13 +17,13 @@ jobs:
       run: |
         echo "latest_tag=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> "$GITHUB_ENV"
 
-    - name: AppMan ${{ env.GITHUB_ENV }}
+    - name: AppMan Release
+      if: ${{ env.GITHUB_ENV }}
       uses: ncipollo/release-action@v1.12.0
       with:
           name: AppMan ${{ env.GITHUB_ENV }}
           tag: ${{ env.GITHUB_ENV }}
           prerelease: false
-          input: ${{ env.GITHUB_ENV }}
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           removeArtifacts: true
