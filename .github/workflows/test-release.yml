@@ -21,7 +21,8 @@ jobs:
     - name: build
       if: always()
       run: |
-        echo "matrix=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> $GITHUB_OUTPUT
+        input=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)
+        echo "matrix=$input" >> $GITHUB_OUTPUT
       env:
           input: ${{ inputs.input_json }}
     outputs:
