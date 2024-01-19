@@ -16,10 +16,8 @@ jobs:
         uses: amitsingh-007/next-release-tag@v4.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          run: |
-            echo "generate_release_tag=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> "$GITHUB_ENV"
           tag_prefix: ''
-          tag_template: 'yyyy.mm.dd.i'
+          tag_template: ${{ echo "$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" }}
 
       - name: Create Release
         uses: actions/create-release@v1
