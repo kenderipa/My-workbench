@@ -5,10 +5,6 @@ concurrency:
 
 on:
   workflow_dispatch:
-    inputs:
-      input_json: 
-        required: true
-        type: string
 
 jobs:
   build:
@@ -17,28 +13,26 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: build
-    - id: setVariables
+      if: always()
       run: |
-        set -u
-        input=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)
-        echo "matrix=$input" >> $GITHUB_OUTPUT
-      env:
-          input: ${{ inputs.input_json }}
-    outputs:
-      matrix: ${{ steps.setVariables.outputs.matrix }}
-         
+        echo "APPMAN_TAG=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> $GITHUB_ENV
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: Aisleriot-x86_64.AppImage
+        tag: ${{ env.APPMAN_TAG }}
+        
   release:
+      needs: [build]
       permissions: write-all
       runs-on: ubuntu-latest
-      strategy:
-        matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
 
       steps:
         - name: release
           uses: marvinpinto/action-automatic-releases@latest
           with:
-            title: AppMan ${{ inputs.input_json }}
-            automatic_release_tag: ${{ inputs.input_json }}
+            title: AppMan ${{ env.APPMAN_TAG }}
+            automatic_release_tag: ${{ env.APPMAN_TAG }}
             prerelease: false
             draft: false
             repo_token: ${{ secrets.GITHUB_TOKEN }}
