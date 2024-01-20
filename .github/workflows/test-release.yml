@@ -15,7 +15,15 @@ jobs:
     - name: build
       if: always()
       run: |
-        echo "APPMAN_TAG=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)" >> $GITHUB_ENV
+        VERSION=$(wget -q https://api.github.com/repos/ivan-hc/AM-Application-Manager/releases/latest -O - | grep tag_name | cut -d '"' -f 4)
+        git commit --all --message "🔖 $VERSION"
+        git tag $VERSION
+        git push
+        git push --tags
+
+        gh release create $VERSION --generate-notes --title $VERSION --verify-tag
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
   release:
       needs: [build]
@@ -26,8 +34,8 @@ jobs:
         - name: release
           uses: marvinpinto/action-automatic-releases@latest
           with:
-            title: AppMan ${{ env.APPMAN_TAG }}
-            tag: ${{ env.APPMAN_TAG }}
+            title: AppMan ${{ env.VERSION }}
+            tag: ${{ env.VERSION }}
             prerelease: false
             draft: false
             repo_token: ${{ secrets.GITHUB_TOKEN }}
