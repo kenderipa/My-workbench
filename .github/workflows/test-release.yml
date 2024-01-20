@@ -22,8 +22,6 @@ jobs:
         git push --tags
 
         gh release create $VERSION --generate-notes --title $VERSION --verify-tag
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
   release:
       needs: [build]
