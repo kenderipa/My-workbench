@@ -1,0 +1,58 @@
+name: JuNest update stock build
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: build
+      if: always()
+      run: |
+        sudo apt update
+        # SET APPDIR AS A TEMPORARY $HOME DIRECTORY, THIS WILL DO ALL WORK INTO THE APPDIR
+        HOME="$(dirname "$(readlink -f $0)")"
+        # DOWNLOAD AND INSTALL JUNEST (DON'T TOUCH THIS)
+        git clone https://github.com/fsquillace/junest.git ~/.local/share/junest
+        ./.local/share/junest/bin/junest setup
+        # UPDATE ARCH LINUX IN JUNEST
+        ./.local/share/junest/bin/junest -- sudo pacman -Syy
+        ./.local/share/junest/bin/junest -- sudo pacman --noconfirm -Syu
+        echo yes | ./.local/share/junest/bin/junest -- sudo pacman -Scc
+        # REPACK THE JUNEST DIRECTORY
+        tar -czvf junest-x86_64.tar.gz -C ./.junest/ .
+        mkdir dist
+        mv *tar.gz dist/
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: junest-x86_64.tar.gz
+        path: 'dist'
+        
+  release:
+      needs: [build]
+      permissions: write-all
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/download-artifact@v1
+          with:
+            name: junest-x86_64.tar.gz
+
+        - name: release
+          uses: marvinpinto/action-automatic-releases@latest
+          with:
+            title: Continuous build
+            automatic_release_tag: continuous
+            prerelease: false
+            draft: false
+            files: |
+              junest-x86_64.tar.gz
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
