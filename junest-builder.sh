@@ -10,10 +10,4 @@ git clone https://github.com/fsquillace/junest.git ~/.local/share/junest
 # UPDATE ARCH LINUX IN JUNEST
 ./.local/share/junest/bin/junest -- sudo pacman -Syy
 ./.local/share/junest/bin/junest -- sudo pacman --noconfirm -Syu
-
-# REPACK
-cd ./junest
-tar -czvf junest-x86_64.tar.gz .
-cd ..
-
-mv ./junest/*.tar.gz ./
+echo yes | ./.local/share/junest/bin/junest -- sudo pacman -Scc
