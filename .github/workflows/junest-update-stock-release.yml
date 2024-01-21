@@ -1,4 +1,4 @@
-name: JuNest update stock build
+name: JuNest Builder
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
@@ -16,11 +16,10 @@ jobs:
       if: always()
       run: |
         sudo apt update
-        git clone https://github.com/fsquillace/junest.git ~/.local/share/junest
-        ./.local/share/junest/bin/junest setup
-        ./.local/share/junest/bin/junest -- sudo pacman -Syy
-        ./.local/share/junest/bin/junest -- sudo pacman --noconfirm -Syu
-        echo yes | ./.local/share/junest/bin/junest -- sudo pacman -Scc
+        https://raw.githubusercontent.com/ivan-hc/My-workbench/main/junest-builder.sh
+        chmod a+x ./junest-updater.sh
+        ./junest-updater.sh
+        rm -R -f ./*.tar.gz
         tar -czvf junest-x86_64.tar.gz -C ./.junest/ .
         mkdir dist
         mv *tar.gz dist/
@@ -51,3 +50,4 @@ jobs:
             files: |
               junest-x86_64.tar.gz
             repo_token: ${{ secrets.GITHUB_TOKEN }}
+
