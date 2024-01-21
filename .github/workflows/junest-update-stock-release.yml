@@ -16,7 +16,7 @@ jobs:
       if: always()
       run: |
         sudo apt update
-        https://raw.githubusercontent.com/ivan-hc/My-workbench/main/junest-builder.sh
+        wget https://raw.githubusercontent.com/ivan-hc/My-workbench/main/junest-builder.sh
         chmod a+x ./junest-updater.sh
         ./junest-updater.sh
         rm -R -f ./*.tar.gz
