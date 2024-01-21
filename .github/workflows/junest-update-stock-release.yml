@@ -17,8 +17,8 @@ jobs:
       run: |
         sudo apt update
         wget https://raw.githubusercontent.com/ivan-hc/My-workbench/main/junest-builder.sh
-        chmod a+x ./junest-updater.sh
-        ./junest-updater.sh
+        chmod a+x ./junest-builder.sh
+        ./junest-builder.sh
         rm -R -f ./*.tar.gz
         tar -czvf junest-x86_64.tar.gz -C ./.junest/ .
         mkdir dist
