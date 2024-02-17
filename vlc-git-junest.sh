@@ -3,7 +3,7 @@
 # NAME OF THE APP BY REPLACING "SAMPLE"
 APP=vlc-git
 BIN="vlc"
-DEPENDENCES="ca-certificates libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread zvbi"
+DEPENDENCES="ca-certificates libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread zvbi pipewire pulse v4l"
 BASICSTUFF="binutils gzip"
 COMPILERS="base-devel"
 
@@ -30,12 +30,12 @@ echo "
 Include = /etc/pacman.d/mirrorlist" >> ./.junest/etc/pacman.conf
 
 # ENABLE CHAOTIC-AUR
-###./.local/share/junest/bin/junest -- sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-###./.local/share/junest/bin/junest -- sudo pacman-key --lsign-key 3056513887B78AEB
-###./.local/share/junest/bin/junest -- sudo pacman --noconfirm -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
-###echo "
-###[chaotic-aur]
-###Include = /etc/pacman.d/chaotic-mirrorlist" >> ./.junest/etc/pacman.conf
+./.local/share/junest/bin/junest -- sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+./.local/share/junest/bin/junest -- sudo pacman-key --lsign-key 3056513887B78AEB
+./.local/share/junest/bin/junest -- sudo pacman --noconfirm -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+echo "
+[chaotic-aur]
+Include = /etc/pacman.d/chaotic-mirrorlist" >> ./.junest/etc/pacman.conf
 
 # CUSTOM MIRRORLIST, THIS SHOULD SPEEDUP THE INSTALLATION OF THE PACKAGES IN PACMAN (COMMENT EVERYTHING TO USE THE DEFAULT MIRROR)
 _custom_mirrorlist(){
@@ -175,7 +175,7 @@ rm -R -f ./$APP.AppDir/.junest/var/* #REMOVE ALL PACKAGES DOWNLOADED WITH THE PA
 
 BINSAVED="certificates SAVEBINSPLEASE" # Enter here keywords to find and save in /usr/bin
 SHARESAVED="certificates qt" # Enter here keywords or file/folder names to save in both /usr/share and /usr/lib
-LIBSAVED="pk p11 alsa jack pipewire pulse libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread pipewire pulse v4l" # Enter here keywords or file/folder names to save in /usr/lib
+LIBSAVED="pk p11 alsa jack pipewire pulse libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread pipewire pulse v4l qt gl GL" # Enter here keywords or file/folder names to save in /usr/lib
 
 # STEP 1, CREATE A BACKUP FOLDER WHERE TO SAVE THE FILES TO BE DISCARDED (USEFUL FOR TESTING PURPOSES)
 mkdir -p ./junest-backups/usr/bin
@@ -278,7 +278,7 @@ _mvlibs(){
 
 _binlibs 2> /dev/null
 
-#_include_swrast_dri 2> /dev/null
+_include_swrast_dri 2> /dev/null
 
 _libkeywords 2> /dev/null
 
