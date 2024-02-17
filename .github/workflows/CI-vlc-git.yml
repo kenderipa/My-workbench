@@ -42,8 +42,8 @@ jobs:
         - name: release
           uses: marvinpinto/action-automatic-releases@latest
           with:
-            title: Continuous build
-            automatic_release_tag: continuous
+            title: Test VLC git
+            automatic_release_tag: test-vlc-git
             prerelease: false
             draft: false
             files: |
