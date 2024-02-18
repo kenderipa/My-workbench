@@ -3,7 +3,7 @@
 # NAME OF THE APP BY REPLACING "SAMPLE"
 APP=vlc-git
 BIN="vlc"
-DEPENDENCES="ca-certificates libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread zvbi pipewire pulse v4l"
+DEPENDENCES="ca-certificates jre8-openjdk libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread zvbi pipewire pulse v4l"
 BASICSTUFF="binutils gzip"
 COMPILERS="base-devel"
 
@@ -174,8 +174,8 @@ rm -R -f ./$APP.AppDir/.junest/var/* #REMOVE ALL PACKAGES DOWNLOADED WITH THE PA
 # THE AFFECTED DIRECTORIES WILL BE /usr/bin (STEP 2), /usr/lib (STEP 3) AND /usr/share (STEP 4)
 
 BINSAVED="certificates SAVEBINSPLEASE" # Enter here keywords to find and save in /usr/bin
-SHARESAVED="certificates qt" # Enter here keywords or file/folder names to save in both /usr/share and /usr/lib
-LIBSAVED="pk p11 alsa jack pipewire pulse libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread pipewire pulse v4l qt gl GL" # Enter here keywords or file/folder names to save in /usr/lib
+SHARESAVED="certificates qt java" # Enter here keywords or file/folder names to save in both /usr/share and /usr/lib
+LIBSAVED="pk p11 alsa jack pipewire pulse libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread pipewire pulse v4l qt gl GL jvm" # Enter here keywords or file/folder names to save in /usr/lib
 
 # STEP 1, CREATE A BACKUP FOLDER WHERE TO SAVE THE FILES TO BE DISCARDED (USEFUL FOR TESTING PURPOSES)
 mkdir -p ./junest-backups/usr/bin
