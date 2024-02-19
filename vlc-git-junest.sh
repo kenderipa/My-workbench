@@ -3,7 +3,7 @@
 # NAME OF THE APP BY REPLACING "SAMPLE"
 APP=vlc-git
 BIN="vlc"
-DEPENDENCES="ca-certificates jre8-openjdk libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread zvbi pipewire pulse libxtst libxi libvdpau-nvidia libva v4l"
+DEPENDENCES="ca-certificates jre17-openjdk libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread zvbi pipewire pulse libxtst libxi libvdpau-nvidia libva v4l"
 BASICSTUFF="binutils gzip"
 COMPILERS="base-devel"
 
