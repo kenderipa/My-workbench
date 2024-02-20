@@ -3,7 +3,7 @@
 # NAME OF THE APP BY REPLACING "SAMPLE"
 APP=vlc-git
 BIN="vlc"
-DEPENDENCES="ca-certificates jre8-openjdk libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread zvbi pipewire pulse alsa jack libxtst libxi a52dec aribb24 faad2 ffmpeg fontconfig freetype2 fribidi gnutls harfbuzz libarchive libdca libdvbpsi libidn libupnp libmad libmatroska libmicrodns libmpcdec libmpeg2 libplacebo libproxy libsecret libxinerama libxml2 libxpm lua52 qt5-base qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-x11extras taglib wayland-protocols xcb-util-keysyms"
+DEPENDENCES="ca-certificates jre8-openjdk libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread pipewire pulse alsa jack libxtst libxi vulkan-swrast"
 BASICSTUFF="binutils gzip"
 COMPILERS="base-devel"
 
@@ -174,9 +174,9 @@ rm -R -f ./$APP.AppDir/.junest/var/* #REMOVE ALL PACKAGES DOWNLOADED WITH THE PA
 # WE WILL MOVE EXCESS CONTENT TO BACKUP FOLDERS (STEP 1)
 # THE AFFECTED DIRECTORIES WILL BE /usr/bin (STEP 2), /usr/lib (STEP 3) AND /usr/share (STEP 4)
 
-#BINSAVED="certificates SAVEBINSPLEASE" # Enter here keywords to find and save in /usr/bin
-#SHARESAVED="certificates qt java ffmpeg fontconfig gnutls harfbuzz" # Enter here keywords or file/folder names to save in both /usr/share and /usr/lib
-#LIBSAVED="pk p11 alsa jack pipewire pulse libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread libxtst libxi qt gl GL jvm a52dec aribb24 faad2 freetype2 fribidi libarchive libdca libdvbpsi libidn libupnp libmad libmatroska libmicrodns libmpcdec libmpeg2 libplacebo libproxy libsecret libxinerama libxml2 libxpm lua52 qt5-base qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-x11extras taglib wayland-protocols xcb-util-keysyms" # Enter here keywords or file/folder names to save in /usr/lib
+BINSAVED="certificates SAVEBINSPLEASE" # Enter here keywords to find and save in /usr/bin
+SHARESAVED="certificates qt java" # Enter here keywords or file/folder names to save in both /usr/share and /usr/lib
+LIBSAVED="pk p11 alsa jack pipewire pulse libaacs libbluray libbdplus libdvdcss libdvdnav libdvdread libxtst libxi qt jvm a52dec aribb24 faad2 freetype2 fribidi lib lua52 taglib xcb-util-keysyms vulkan-swrast" # Enter here keywords or file/folder names to save in /usr/lib
 
 # STEP 1, CREATE A BACKUP FOLDER WHERE TO SAVE THE FILES TO BE DISCARDED (USEFUL FOR TESTING PURPOSES)
 mkdir -p ./junest-backups/usr/bin
